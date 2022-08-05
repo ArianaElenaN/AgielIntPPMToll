@@ -1,6 +1,10 @@
 package io.aglainintelligence.ppmtool.Domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -9,13 +13,23 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @NotBlank(message = "Project Name is required")
     private String projectName;
+    @NotBlank(message = "Identifier for Project is required")
+    @Size(min = 4, max = 5, message = "Identifier size from 4 to 5")
+    @Column(updatable = false, unique = true)
     private String projectIdentifier;
+    @NotBlank(message = "Description is required")
     private String description;
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date start_date;
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date end_date;
 
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date create_At;
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updated_At;
 
     public Project() {
